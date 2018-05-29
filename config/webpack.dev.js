@@ -5,9 +5,18 @@ const merge = require('webpack-merge')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = merge(baseWebapckConfig, {
+  devtool: 'eval-source-map',
   mode: 'development',
   output: {
     filename: 'js/[name].[hash:8].js'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.s?css$/,
+        use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
+      }
+    ]
   },
   plugins: [
     new HtmlWebpackPlugin({
