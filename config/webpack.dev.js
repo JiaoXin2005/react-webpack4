@@ -19,14 +19,14 @@ module.exports = merge(baseWebapckConfig, {
     ]
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: 'public/index.html',
-      inject: 'body',
-      minify: {
-        html5: true
-      },
-      hash: false
-    }),
+    // new HtmlWebpackPlugin({
+    //   template: 'public/index.html',
+    //   inject: 'body',
+    //   minify: {
+    //     html5: true
+    //   },
+    //   hash: false
+    // }),
     new webpack.HotModuleReplacementPlugin()
   ],
   devServer: {

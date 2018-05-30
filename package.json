@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --config config/webpack.prod.js",
-    "build:dll": "webpack --config config/webpack.dll.js --mode development",
+    "build:dll": "webpack --config config/webpack.dll.js --mode production",
     "dev": "webpack-dev-server --config config/webpack.dev.js"
   },
   "author": "",

@@ -14,7 +14,7 @@ const happyThreadPool = HappyPack.ThreadPool({size: os.cpus().length})
 module.exports = {
   entry: {
     app: './app/index.js',
-    vendor: ['react', 'react-dom', 'react-router-dom']
+    // vendor: ['react', 'react-dom', 'react-router-dom']
   },
   output: {
     filename: 'js/[name].[chunkhash:8].js',
@@ -24,8 +24,8 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
-        use: 'babel-loader',
-        // use: 'happypack/loader?id=happy-bable-js',
+        // use: 'babel-loader',
+        use: 'happypack/loader?id=happy-bable-js',
         include: APP_PATH,
         exclude: '/node_modules/'
       },
@@ -50,7 +50,11 @@ module.exports = {
       }
     }),
     // new AddAssetHtmlPlugin({
-    //   filepath: path.resolve(__dirname, '../.dll/vendor.dll.js')
+    //   filepath: path.resolve(__dirname, '../.dll/vendor.dll.js'),
+    //   includeSourcemap: false,
+    //   publicPath: './js/',
+    //   outputPath: '/js/',
+    //   hash: true
     // }),
     new CleanWebpackPlugin(['../dist'], { allowExternal: true }),
     new ProgressBarPlugin({
@@ -58,14 +62,14 @@ module.exports = {
       clear: false,
       width: 200
     }),
-    // new webpack.DllReferencePlugin({
-    //   manifest: path.join(__dirname,  '../.dll/manifest.json'),
-    //   context: __dirname
-    // }),
-    // new HappyPack({
-    //   id: 'happy-bable-js',
-    //   loaders: ['babel-loader?cacheDirectory=true'],
-    //   threadPool: happyThreadPool
-    // })
+    new webpack.DllReferencePlugin({
+      manifest: path.join(__dirname,  '../.dll/manifest.json'),
+      context: __dirname
+    }),
+    new HappyPack({
+      id: 'happy-bable-js',
+      loaders: ['babel-loader?cacheDirectory=true'],
+      threadPool: happyThreadPool
+    })
   ]
 }
