@@ -5,7 +5,7 @@ const merge = require('webpack-merge')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = merge(baseWebapckConfig, {
-  devtool: 'eval-source-map',
+  // devtool: 'eval-source-map',
   mode: 'development',
   output: {
     filename: 'js/[name].[hash:8].js'
