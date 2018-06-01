@@ -2,9 +2,10 @@ const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base')
 const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin')
 const WebpackParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 module.exports = merge(baseWebpackConfig, {
-  // devtool: 'source-map',
+  devtool: 'source-map',
   mode: 'production',
   optimization: {
     splitChunks: {
@@ -34,10 +35,12 @@ module.exports = merge(baseWebpackConfig, {
     ]
   },
   plugins: [
+    new CleanWebpackPlugin(['../dist'], { allowExternal: true }),
     new ExtractTextWebpackPlugin({
       filename: 'css/[name].[hash:8].css'
     }),
     new WebpackParallelUglifyPlugin({
+      sourceMap: true,
       uglifyJS: {
         output: {
           beautify: false, //不需要格式化

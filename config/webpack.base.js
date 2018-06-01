@@ -2,9 +2,9 @@ const path = require('path');
 const webpack = require('webpack')
 const APP_PATH = path.resolve(__dirname, '../app')
 const DIST_PATH = path.resolve(__dirname, '../dist')
+const paths = require('./paths')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const chalk = require('chalk')
 const os = require('os')
@@ -49,22 +49,27 @@ module.exports = {
         html5: true
       }
     }),
-    // new AddAssetHtmlPlugin({
-    //   filepath: path.resolve(__dirname, '../.dll/vendor.dll.js'),
-    //   includeSourcemap: false,
-    //   publicPath: './js/',
-    //   outputPath: '/js/',
-    //   hash: true
-    // }),
-    new CleanWebpackPlugin(['../dist'], { allowExternal: true }),
+    new AddAssetHtmlPlugin({
+      filepath: process.env.NODE_ENV === 'production'
+        ? path.resolve(paths.prod.dll, 'vendor.dll.js')
+        : path.resolve(paths.dev.dll, 'vendor.dll.js'),
+
+      includeSourcemap: false,
+      publicPath: './js/',
+      outputPath: '/js/',
+      hash: true
+    }),
+    new webpack.DllReferencePlugin({
+      manifest: process.env.NODE_ENV === 'production' 
+        ? path.resolve(paths.prod.dll, 'manifest.json')
+        : path.resolve(paths.dev.dll, 'manifest.json'),
+
+      context: __dirname
+    }),
     new ProgressBarPlugin({
       format: '  build [:bar] ' + chalk.green.bold(':percent') + ' (:elapsed seconds)',
       clear: false,
       width: 200
-    }),
-    new webpack.DllReferencePlugin({
-      manifest: path.join(__dirname,  '../.dll/manifest.json'),
-      context: __dirname
     }),
     new HappyPack({
       id: 'happy-bable-js',

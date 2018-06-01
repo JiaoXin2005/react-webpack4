@@ -3,9 +3,10 @@ const path = require('path')
 const baseWebapckConfig = require('./webpack.base')
 const merge = require('webpack-merge')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CopyWebpakPlugin = require('copy-webpack-plugin')
 
 module.exports = merge(baseWebapckConfig, {
-  // devtool: 'eval-source-map',
+  devtool: 'eval-source-map',
   mode: 'development',
   output: {
     filename: 'js/[name].[hash:8].js'
@@ -19,14 +20,9 @@ module.exports = merge(baseWebapckConfig, {
     ]
   },
   plugins: [
-    // new HtmlWebpackPlugin({
-    //   template: 'public/index.html',
-    //   inject: 'body',
-    //   minify: {
-    //     html5: true
-    //   },
-    //   hash: false
-    // }),
+    new CopyWebpakPlugin([
+      { from: path.resolve(__dirname, '../.dll/dev/*.dll.js'), to: './js/[name].[ext]', toType: 'template' }
+    ]),
     new webpack.HotModuleReplacementPlugin()
   ],
   devServer: {
