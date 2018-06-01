@@ -18,7 +18,10 @@ module.exports = {
   },
   output: {
     filename: 'js/[name].[chunkhash:8].js',
-    path: DIST_PATH
+    path: DIST_PATH,
+    publicPath: process.env.NODE_ENV === 'production' 
+      ? paths.prod.publicPath
+      : paths.dev.publicPath
   },
   module: {
     rules: [

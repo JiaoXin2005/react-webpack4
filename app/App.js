@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { HashRouter as Router, Route, Link } from 'react-router-dom'
 import List from './List'
 import logo from './logo.svg'
 import './style.scss'
@@ -9,7 +9,6 @@ import Home from './component/Home'
 
 class App extends Component {
   render () {
-    console.log('13121312321')
     return (
       <div>
         <h3 >Demo Test</h3>
