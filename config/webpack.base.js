@@ -27,8 +27,8 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
-        // use: 'babel-loader',
-        use: 'happypack/loader?id=happy-bable-js',
+        use: 'babel-loader',
+        // use: 'happypack/loader?id=happy-bable-js',
         include: APP_PATH,
         exclude: '/node_modules/'
       },
